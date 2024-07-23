@@ -34,6 +34,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,16 +45,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.damage_app_001.R
 
 @Composable
-fun Mainscreen() {
-    MainLeyout()
+fun Mainscreen(navController: NavHostController) {
+    MainLeyout(navController)
 }
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainLeyout() {
+fun MainLeyout(navHostController: NavHostController) {
 
     var list = emptyList<Int>()
     Scaffold(
@@ -61,14 +65,15 @@ fun MainLeyout() {
         topBar = {
             TopAppBar(
                 title = {
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(100.dp)
-                            .background(colorResource(R.color.app_blue))
-                    ) {
+                    Text(
+                        text = "Home",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(start = 1.dp)
+                    )
+                },
+                navigationIcon = {
+
 
                         IconButton(onClick = { /*TODO*/ }) {
                             Icon(
@@ -79,21 +84,18 @@ fun MainLeyout() {
                             )
 
                         }
-
-                        Text(
-                            text = "Home",
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(start = 1.dp)
-                        )
-                    }
-                })
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = colorResource(id = R.color.app_blue)
+                )
+            )
         },
 
         bottomBar = {
             BottomAppBar {
                 Box {
-                    Button(onClick = { /*TODO*/ },
+                    Button(onClick = { navHostController.navigate(
+                        CREATE_AND_SHOW_LOCALIZATION_SCREEN)},
                         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.app_blue)),
                         shape = RoundedCornerShape(25.dp),
                         modifier = Modifier
@@ -194,5 +196,6 @@ fun StartButton(imageVector: ImageVector, text: String ) {
 @Preview
 @Composable
 fun previewLeyout() {
-    MainLeyout()
+    val navController = rememberNavController()
+    MainLeyout(navController)
 }
