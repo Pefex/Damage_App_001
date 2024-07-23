@@ -2,26 +2,26 @@ package com.example.damage_app_001.ui_elements
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.damage_app_001.data.ListData
-import com.example.damage_app_001.domain.ElementsRepository
+import com.example.damage_app_001.data.Property
+import com.example.damage_app_001.domain.PropertyRepository
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    val repository: ElementsRepository
+    val repository: PropertyRepository
 ) : ViewModel(){
 
     val data = repository.allData
 
 
-    fun insert(data: ListData){
+    fun insert(data: Property){
         viewModelScope.launch {
-            repository.insert(data)
+            repository.insertProperty(data)
         }
     }
 
-    fun delete(data: ListData){
+    fun delete(data: Property){
         viewModelScope.launch {
-            repository.delete(data)
+            repository.deleteProperty(data)
         }
     }
 }
