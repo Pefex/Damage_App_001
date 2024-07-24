@@ -18,11 +18,21 @@ class MainActivity : ComponentActivity() {
             .databaseBuilder(applicationContext, PropertyDataBase::class.java, "element-db")
             .build()
         // 2. Manual MainViewModel Creation
-        val mainViewModel = MainViewModel(PropertyRepository(db.propertyDao()))
+        val mainViewModel = MainViewModel(PropertyRepository(
+            db.propertyDao(),
+            db.componentDao(),
+            db.stairsDao(),
+            db.floorDao(),
+            db.elementsDao(),
+            db.buildingElementsDao()
+        )
+
+        )
 
         enableEdgeToEdge()
         setContent {
-            NavigationGraph(navHostController = rememberNavController())
+            NavigationGraph(navHostController = rememberNavController(), mainViewModel)
+
         }
     }
 }

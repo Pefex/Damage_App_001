@@ -19,11 +19,13 @@ import androidx.compose.ui.window.PopupProperties
 @Composable
 
 fun CustomizeDropDown(
-    options: List<String>
+    options: List<String>,
+    value : String,
+    onValueChange : (String) -> Unit
 ) {
 
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf("") }
+
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded },
@@ -31,8 +33,8 @@ fun CustomizeDropDown(
         TextField(
             // The `menuAnchor` modifier must be passed to the text field for correctness.
             modifier = Modifier.menuAnchor(),
-            value = selectedOptionText,
-            onValueChange = { selectedOptionText = it },
+            value = value,
+            onValueChange = { onValueChange(it)},
             label = { Text("Label") },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             colors = ExposedDropdownMenuDefaults.textFieldColors(
@@ -41,7 +43,7 @@ fun CustomizeDropDown(
             ),
         )
         // filter options based on text field value
-        val filteringOptions = options.filter { it.contains(selectedOptionText, ignoreCase = true) }
+        val filteringOptions = options.filter { it.contains(value, ignoreCase = true) }
         if (filteringOptions.isNotEmpty()) {
             DropdownMenu(
                 modifier = Modifier
@@ -56,7 +58,7 @@ fun CustomizeDropDown(
                     DropdownMenuItem(
                         text = { Text(selectionOption) },
                         onClick = {
-                            selectedOptionText = selectionOption
+                            onValueChange(selectionOption)
                             expanded = false
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,

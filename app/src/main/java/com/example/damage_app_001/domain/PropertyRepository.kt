@@ -86,7 +86,7 @@ class PropertyRepository(
 
     val allElementsList : Flow<List<Elements>>  = elementDao.getAllElements()
 
-    suspend fun insertElelment(data: Elements){
+    suspend fun insertElement(data: Elements){
         elementDao.insertElement(data)
     }
 
@@ -108,7 +108,7 @@ class PropertyRepository(
         buildingElementsDao.updateBuildingElements(data)
     }
 
-    suspend fun deleteBuildingEllent(data: BuildingElements){
+    suspend fun deleteBuildingElement(data: BuildingElements){
         buildingElementsDao.deleteBuildingElements(data)
     }
 
